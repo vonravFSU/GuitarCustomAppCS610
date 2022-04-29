@@ -1,27 +1,51 @@
-import re
+import time
+import utility
 
-possibleGuitars = [];
+# Runs the program
+def run():
+    try:
+        print('\n--- |MAIN MENU| ---'
+              '\nSelect from one of the following options: '
+              '\n(1) Print guitar list'
+              '\n(2) Search guitar in directory'
+              '\n(3) Add guitar to directory'
+              '\n(4) Delete guitar from directory'
+              '\n(5) Exit')
+        user_input = int(input('Selection: '))
+        if user_input == 1:
+            utility.print_guitar_list()
+            run()
+        elif user_input == 2:
+            utility.check_list()
+            run()
+        elif user_input == 3:
+            utility.append_to_file()
+            run()
+        elif user_input == 4:
+            utility.delete_guitar()
+            run()
+        elif user_input == 5:
+            print('---'
+                  '\nThanks for using our program.')
+            time.sleep(1)
+            print('Goodbye', end=" ")
+            time.sleep(.5)
+            print('for now.')
+            time.sleep(1)
+            exit()
+        else:
+            print('Please enter a valid selection.'
+                  '\nReturning to main.')
+            time.sleep(2)
+            run()
 
-classicGuitar = {"name: Classic Guitar", "yellow", "normal", "cheap"};
-metalGuitar = {"name: Metal Guitar", "black", "metal", "expensive"};
-rockGuitar = {"name: Rock Guitar", "red", "rock", "expensive"};
 
-listOfSets = [classicGuitar, metalGuitar, rockGuitar]
+    except Exception as err:
+        print('Oops... An error has occurred. Don\'t fear we will get to the bottom of this!'
+              '\nRerunning program one more time.')
+        time.sleep(2)
+        run()
 
-checkSet = {input("Enter attribute: ")}
-
-count = 0
-
-for count in range(len(listOfSets)):
-    if checkSet.issubset(listOfSets[count]):
-        for i in listOfSets[count]:
-            if re.match("name", i):
-                i = i.removeprefix("name: ")
-                possibleGuitars.append(i);
-
-print("Recommended guitars: ")
-for i in possibleGuitars:
-    if i != possibleGuitars[len(possibleGuitars) - 1]:
-        print (i, end = ", ")
-    else:
-        print(i, end=".")
+print('Welcome to Guitar Aid. This program is intended to help guitar selection.'
+      '\nIf you are looking for a guitar (color, style, sound) you may find some help here.')
+run()

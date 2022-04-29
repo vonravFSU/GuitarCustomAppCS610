@@ -1,0 +1,17 @@
+0
+name: Heavy Metal
+expensive
+black
+metal
+heavy
+1
+black
+yellow
+name: Classic Guitar
+classic
+cheap
+2
+name: Rock Guitar
+red
+rock
+affordable

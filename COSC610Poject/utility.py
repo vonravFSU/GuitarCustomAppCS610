@@ -10,7 +10,6 @@ temp_set = set()
 # Loads each guitar and its corresponding attributes into a set
 # & Loads each set into master list
 def load_items():
-
     with open('guitar_list.txt', 'r') as f:
         for line in f:
             if any(c.isdigit() for c in line):
@@ -120,6 +119,7 @@ def check_list():
         print('No guitars found based on entered attribute')
 
     print('\n---')
+    possible_guitars.clear()
     master_list.clear()
     wait_for_user()
 

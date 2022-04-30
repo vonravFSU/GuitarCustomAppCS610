@@ -3,8 +3,10 @@ import re
 
 # Declaring Variables
 possible_guitars = []
+guitar_counter = []
 master_list = list(set())
 temp_set = set()
+guitar_set = set()
 
 
 # Loads each guitar and its corresponding attributes into a set
@@ -12,7 +14,7 @@ temp_set = set()
 def load_items():
     with open('guitar_list.txt', 'r') as f:
         for line in f:
-            if any(c.isdigit() for c in line):
+            if any(c == '-' for c in line):
                 if len(temp_set) != 0:
                     master_list.append(set(temp_set))
                     temp_set.clear()
@@ -24,7 +26,6 @@ def load_items():
 
 # Appends guitar to file
 def append_to_file():
-    count = len(master_list) + 1
     attribute = ' '
 
     guitar_name = input('Enter guitar name: ')
@@ -36,10 +37,13 @@ def append_to_file():
         temp_set.add(attribute)
 
     with open('guitar_list.txt', 'a') as f:
-        f.write(str(count))
+        f.write('-')
         f.write('\n')
         f.write('name: ')
         f.write(guitar_name)
+        f.write('\n')
+        f.write('counter: ')
+        f.write('0')
         f.write('\n')
         for i in temp_set:
             f.write(i)
@@ -51,20 +55,19 @@ def append_to_file():
 
 # Writes guitars to file
 def write_to_file():
-    count = 0
     with open('guitar_list.txt', 'w') as f:
         for item in master_list:
-            f.write(str(count))
+            f.write('-')
             f.write('\n')
             for i in item:
                 f.write(i)
                 f.write('\n')
-            count += 1
     f.close()
 
 
 # Prints the name of all available guitars
 def print_guitar_list():
+    g_count = 0
     load_items()
     if check_if_empty():
         return
@@ -76,14 +79,20 @@ def print_guitar_list():
             if re.match("name", i):
                 i = i.removeprefix("name: ")
                 possible_guitars.append(i)
+            elif re.match("counter", i):
+                i = i.removeprefix("counter: ")
+                guitar_counter.append(i)
 
     print('Guitar List: ')
     for i in possible_guitars:
         num += 1
-        print(num, i)
+        print(num, i, '| Popularity: ', guitar_counter[g_count])
+        g_count += 1
+
     possible_guitars.clear()
     wait_for_user()
     master_list.clear()
+    guitar_counter.clear()
 
 
 # Checks if user entry is subset of sets in master list
@@ -105,8 +114,18 @@ def check_list():
         if temp_set.issubset(master_list[count]):
             for i in master_list[count]:
                 if re.match("name", i):
+                    guitar_set.add(i)
                     i = i.removeprefix("name: ")
                     possible_guitars.append(i)
+                elif re.match("counter", i):
+                    i = i.removeprefix("counter: ")
+                    g_count = int(i)
+                    i = 'counter: ' + str(g_count + 1)
+                    guitar_set.add(i)
+                else:
+                    guitar_set.add(i)
+            master_list[count] = set(guitar_set)
+            guitar_set.clear()
 
     print('Guitars matching term(s): ')
     if len(possible_guitars) != 0:
@@ -117,8 +136,9 @@ def check_list():
                 print(i, end=".")
     else:
         print('No guitars found based on entered attribute')
-
     print('\n---')
+
+    write_to_file()
     possible_guitars.clear()
     master_list.clear()
     wait_for_user()

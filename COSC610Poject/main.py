@@ -1,6 +1,7 @@
 import time
 import utility
 
+
 # Runs the program
 def run():
     try:
@@ -39,12 +40,12 @@ def run():
             time.sleep(2)
             run()
 
-
     except Exception as err:
         print('Oops... An error has occurred. Don\'t fear we will get to the bottom of this!'
               '\nRerunning program one more time.')
         time.sleep(2)
         run()
+
 
 print('Welcome to Guitar Aid. This program is intended to help guitar selection.'
       '\nIf you are looking for a guitar (color, style, sound) you may find some help here.')

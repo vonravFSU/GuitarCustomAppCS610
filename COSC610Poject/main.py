@@ -1,3 +1,15 @@
+"""
+Author: Hazmed Moreno
+        James Whittington
+Class: Main
+Description: Runs program loop
+Version: 1.0.0
+Release Date: 5.1.2022
+contact: hmoreno0@frostburg.edu
+         jrwhittington0@frostburg.edu
+"""
+
+
 import time
 import utility
 
@@ -40,7 +52,7 @@ def run():
             time.sleep(2)
             run()
 
-    except Exception as err:
+    except (Exception,):
         print('Oops... An error has occurred. Don\'t fear we will get to the bottom of this!'
               '\nRerunning program one more time.')
         time.sleep(2)
